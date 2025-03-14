@@ -329,7 +329,6 @@ const updateCartByPaymentId = async (cartId: string, paymentId: string, cartVers
   return updateCartByPaymentIdResponse;
 };
 
-//Aswin:need to change this
 /**
  * Sets customer tokens.
  * 
