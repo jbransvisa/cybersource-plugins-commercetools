@@ -147,14 +147,9 @@ export class ProcessingInformation {
     private configurePaymentSolution(resourceObj: PaymentType | null, customFields?: Partial<PaymentCustomFieldsType>) {
         switch (resourceObj?.paymentMethodInfo?.method) {
             case Constants.CLICK_TO_PAY: {
-                if (customFields) {
-                    if (customFields?.isv_transientToken) {
-                        this.processingInformation.paymentSolution = Constants.PAYMENT_GATEWAY_CLICK_TO_PAY_UC_PAYMENT_SOLUTION;
-                        this.processingInformation.visaCheckoutId = customFields.isv_transientToken;
-                    } else {
-                        this.processingInformation.paymentSolution = Constants.PAYMENT_GATEWAY_CLICK_TO_PAY_PAYMENT_SOLUTION;
-                        this.processingInformation.visaCheckoutId = customFields.isv_token;
-                    }
+                if (customFields && customFields.isv_transientToken) {
+                    this.processingInformation.paymentSolution = Constants.PAYMENT_GATEWAY_CLICK_TO_PAY_UC_PAYMENT_SOLUTION;
+                    this.processingInformation.visaCheckoutId = customFields.isv_transientToken;
                 }
                 break;
             }

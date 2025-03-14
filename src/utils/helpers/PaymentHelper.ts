@@ -88,11 +88,6 @@ const getClickToPayResponse = async (updatePaymentObj: PaymentType, cartObj: any
             if (visaCheckoutData) {
                 actions = paymentActions.cardDetailsActions(visaCheckoutData);
                 paymentValidator.validateActionsAndPush(actions, authResponse.actions);
-                if (!updatePaymentObj?.custom?.fields?.isv_transientToken) {
-                    const cartUpdate = await commercetoolsApi.updateCartByPaymentId(cartObj.id, paymentId, cartObj.version, visaCheckoutData);
-                    const clickToPayUpdateMessage = cartUpdate ? CustomMessages.SUCCESS_MSG_UPDATE_CLICK_TO_PAY_CARD_DETAILS : CustomMessages.ERROR_MSG_UPDATE_CART;
-                    paymentUtils.logData(__filename, FunctionConstant.FUNC_GET_CLICK_TO_PAY_RESPONSE, Constants.LOG_INFO, 'PaymentId : ' + paymentId, clickToPayUpdateMessage);
-                }
             } else {
                 paymentUtils.logData(__filename, FunctionConstant.FUNC_GET_CLICK_TO_PAY_RESPONSE, Constants.LOG_ERROR, 'PaymentId : ' + paymentId, CustomMessages.ERROR_MSG_UPDATE_CLICK_TO_PAY_DATA);
             }

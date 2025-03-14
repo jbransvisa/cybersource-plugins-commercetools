@@ -74,9 +74,9 @@ For the Commercetools Extension to support MOTO transaction, follow the steps me
 
     Also see [Decision Manager](Decision-Manager.md) for additional fields to be populated if you are using Decision Manager
 
-4.  For Visa Click to Pay, Google Pay, Apple Pay and eCheck create a Commercetools payment (https://docs.commercetools.com/api/projects/payments) and populate the required fields mentioned in the respective documents
+4.  For Google Pay, Apple Pay and eCheck create a Commercetools payment (https://docs.commercetools.com/api/projects/payments) and populate the required fields mentioned in the respective documents
 
-    - [Process a Payment With Click to Pay](Process-a-Payment-ClicktoPay.md)
+
     - [Process a Payment With Google Pay](Process-a-Payment-GooglePay.md)
     - [Process a Payment With Apple Pay](Process-a-Payment-ApplePay.md)
     - [Process a Payment With eCheck](./Process-a-Payment-eCheck.md)
