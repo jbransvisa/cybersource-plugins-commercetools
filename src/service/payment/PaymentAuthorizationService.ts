@@ -55,7 +55,6 @@ const getAuthorizationResponse = async (payment: PaymentType, cart: any, service
     requestObj.paymentInformation = paymentInformation;
     requestObj.orderInformation = prepareFields.getOrderInformation(FunctionConstant.FUNC_GET_AUTHORIZATION_RESPONSE, payment, payment.transactions[0], cart, null, null, null, '') as Ptsv2paymentsOrderInformation;
     requestObj.deviceInformation = prepareFields.getDeviceInformation(payment, null, service);
-    requestObj.riskInformation = await prepareFields.getRiskInformation(payment);
     let merchantDefinedFields = prepareFields.getMetaData(payment);
     if (0 < merchantDefinedFields?.length) {
       requestObj.merchantDefinedInformation = merchantDefinedFields;

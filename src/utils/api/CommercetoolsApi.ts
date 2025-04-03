@@ -142,13 +142,6 @@ const queryOrderById = async (id: string, idType: string) => {
           uri = requestBuilder.orders.parse({ where: [`paymentInfo(payments(id="${id}"))`] }).build();
           logIdType = 'PaymentId : ';
           break;
-        case Constants.CUSTOMER_ID: {
-          let newDate = paymentUtils.getDate(null, false, -6, null) as number;
-          let setDate = paymentUtils.getDate(null, false, null, newDate);
-          let filterDate = paymentUtils.getDate(setDate, true);
-          uri = requestBuilder.orders.where(`customerId="${id}" and createdAt >= "${filterDate}"`).build();
-          logIdType = 'CustomerId : ';
-        }
       }
       const channelsRequest = {
         uri: uri,
@@ -329,7 +322,6 @@ const updateCartByPaymentId = async (cartId: string, paymentId: string, cartVers
   return updateCartByPaymentIdResponse;
 };
 
-//Aswin:need to change this
 /**
  * Sets customer tokens.
  * 

@@ -1,4 +1,4 @@
-import { Ptsv2paymentsClientReferenceInformation, Ptsv2paymentsConsumerAuthenticationInformation, Ptsv2paymentsDeviceInformation, Ptsv2paymentsidcapturesOrderInformationAmountDetails, Ptsv2paymentsidClientReferenceInformationPartner, Ptsv2paymentsidreversalsClientReferenceInformation, Ptsv2paymentsidreversalsClientReferenceInformationPartner, Ptsv2paymentsidreversalsOrderInformationAmountDetails, Ptsv2paymentsOrderInformationAmountDetails, Ptsv2paymentsOrderInformationBillTo, Ptsv2paymentsOrderInformationShipTo, Ptsv2paymentsPromotionInformation, Ptsv2paymentsRiskInformationBuyerHistory, Ptsv2paymentsRiskInformationBuyerHistoryCustomerAccount, Ptsv2paymentsTokenInformation, Riskv1authenticationsetupsTokenInformation, Riskv1authenticationsRiskInformation, Riskv1decisionsClientReferenceInformation, Riskv1decisionsClientReferenceInformationPartner, Tmsv2customersBuyerInformation, Upv1capturecontextsCaptureMandate, Upv1capturecontextsOrderInformationAmountDetails } from 'cybersource-rest-client';
+import { Ptsv2paymentsClientReferenceInformation, Ptsv2paymentsConsumerAuthenticationInformation, Ptsv2paymentsDeviceInformation, Ptsv2paymentsidcapturesOrderInformationAmountDetails, Ptsv2paymentsidClientReferenceInformationPartner, Ptsv2paymentsidreversalsClientReferenceInformation, Ptsv2paymentsidreversalsClientReferenceInformationPartner, Ptsv2paymentsidreversalsOrderInformationAmountDetails, Ptsv2paymentsOrderInformationAmountDetails, Ptsv2paymentsOrderInformationBillTo, Ptsv2paymentsOrderInformationShipTo, Ptsv2paymentsPromotionInformation, Ptsv2paymentsTokenInformation, Riskv1authenticationsetupsTokenInformation, Riskv1decisionsClientReferenceInformation, Riskv1decisionsClientReferenceInformationPartner, Tmsv2customersBuyerInformation, Upv1capturecontextsCaptureMandate, Upv1capturecontextsOrderInformationAmountDetails } from 'cybersource-rest-client';
 import { jwtDecode } from 'jwt-decode';
 
 import { Constants } from '../constants/constants';
@@ -457,38 +457,6 @@ const getUpdateTokenBillTo = (addressData: AddressType | null): any => {
 };
 
 /**
- * Generates risk information for a payment.
- * 
- * @param {PaymentType} payment - The payment object.
- * @returns {Promise<any>} - Risk information.
- */
-const getRiskInformation = async (payment: PaymentType) => {
-  let creationHistory = 'GUEST';
-  let orderDetails;
-  let riskInformation = {} as Riskv1authenticationsRiskInformation;
-  let riskInformationBuyerHistory = {} as Ptsv2paymentsRiskInformationBuyerHistory;
-  let riskInformationBuyerHistoryCustomerAccount = {} as Ptsv2paymentsRiskInformationBuyerHistoryCustomerAccount;
-  const customerId = payment?.customer?.id || '';
-  if (customerId) {
-    const customer = await commercetoolsApi.getCustomer(customerId);
-    if (customer) {
-      orderDetails = await commercetoolsApi.queryOrderById(customerId, Constants.CUSTOMER_ID);
-      if (orderDetails?.total) {
-        creationHistory = 'EXISTING_ACCOUNT';
-        riskInformationBuyerHistoryCustomerAccount.createDate = customer?.createdAt?.split('T')[0];
-        riskInformationBuyerHistory.accountPurchases = orderDetails.total;
-      } else {
-        creationHistory = 'NEW_ACCOUNT';
-      }
-    }
-  }
-  riskInformationBuyerHistoryCustomerAccount.creationHistory = creationHistory;
-  riskInformationBuyerHistory.customerAccount = riskInformationBuyerHistoryCustomerAccount;
-  riskInformation.buyerHistory = riskInformationBuyerHistory;
-  return riskInformation;
-}
-
-/**
  * Generates buyer information based on the provided card tokens.
  * 
  * @param {object} paymentObj - The payment object.
@@ -546,7 +514,6 @@ export default {
   getAllowedPaymentMethods,
   getConfigObject,
   getBuyerInformation,
-  getRiskInformation,
   getPromotionInformation,
   getOrderInformationAmountDetails,
   getOrderInformationBillToDetails,
